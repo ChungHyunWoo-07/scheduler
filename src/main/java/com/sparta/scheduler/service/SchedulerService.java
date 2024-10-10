@@ -13,11 +13,9 @@ import java.util.List;
 public class SchedulerService {
 
     private final JdbcTemplate jdbcTemplate;
-    private final SchedulerRepository schedulerRepository;
 
-    public SchedulerService(JdbcTemplate jdbcTemplate, SchedulerRepository schedulerRepository) {
+    public SchedulerService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.schedulerRepository = schedulerRepository;
     }
 
     //create
