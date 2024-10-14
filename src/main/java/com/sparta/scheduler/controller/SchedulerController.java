@@ -3,7 +3,6 @@ package com.sparta.scheduler.controller;
 import com.sparta.scheduler.dto.SchedulerRequestDto;
 import com.sparta.scheduler.dto.SchedulerResponseDto;
 import com.sparta.scheduler.service.SchedulerService;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +13,8 @@ public class SchedulerController {
 
     private final SchedulerService schedulerService;
 
-    public SchedulerController(JdbcTemplate jdbcTemplate) {
-        this.schedulerService = new SchedulerService(jdbcTemplate);
+    public SchedulerController(SchedulerService schedulerService) {
+        this.schedulerService = schedulerService;
     }
 
     //create

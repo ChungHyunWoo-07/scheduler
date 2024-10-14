@@ -4,8 +4,8 @@ import com.sparta.scheduler.dto.SchedulerRequestDto;
 import com.sparta.scheduler.dto.SchedulerResponseDto;
 import com.sparta.scheduler.entity.Scheduler;
 import com.sparta.scheduler.repository.SchedulerRepository;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ public class SchedulerService {
 
     private final SchedulerRepository schedulerRepository;
 
-    public SchedulerService(JdbcTemplate jdbcTemplate) {
-        this.schedulerRepository = new SchedulerRepository(jdbcTemplate);
+    public SchedulerService(SchedulerRepository schedulerRepository) {
+        this.schedulerRepository = schedulerRepository;
     }
 
     //create
@@ -35,33 +35,34 @@ public class SchedulerService {
     //read
     public List<SchedulerResponseDto> readScheduler() {
         //DB조회
-        return schedulerRepository.findAll();
+        return schedulerRepository.findAll().stream().map(SchedulerResponseDto::new).toList();
     }
 
     //uddate
+    @Transactional
     public Long updateScheduler(Long id, SchedulerRequestDto requestDto) {
         //해당 스케줄이 DB에 있는지 확인
-        Scheduler scheduler = schedulerRepository.findById(id);
-        if (scheduler != null) {
+        Scheduler scheduler = findScheduler(id);
             // 스케줄러 내용 수정
-            schedulerRepository.update(id, requestDto);
+            scheduler.update(requestDto);
+
             return id;
-        } else {
-            throw new IllegalArgumentException("선택한 스케줄은 존재하지 않습니다.");
-        }
     }
 
     //delete
     public Long deleteScheduler(Long id) {
         //해당 스케줄이 DB에 있는지 확인
-        Scheduler scheduler = schedulerRepository.findById(id);
-        if (scheduler != null) {
-            // 스케줄 삭제
-            schedulerRepository.delete(id);
+        Scheduler scheduler = findScheduler(id);
 
-            return id;
-        } else {
-            throw new IllegalArgumentException("선택한 스케줄은 존재하지 않습니다.");
-        }
+            // 스케줄 삭제
+        schedulerRepository.delete(scheduler);
+
+        return id;
+    }
+
+    private Scheduler findScheduler(Long id) {
+        return schedulerRepository.findById(id).orElseThrow(()-> // orElseThrow 어떻게 작동하는 건지?
+                new IllegalArgumentException("선택한 메모는 존재하지 않습니다.")
+        );
     }
 }
