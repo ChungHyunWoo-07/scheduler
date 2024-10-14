@@ -2,7 +2,6 @@ package com.sparta.scheduler.entity;
 
 import com.sparta.scheduler.dto.SchedulerRequestDto;
 import jakarta.persistence.*;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,9 +22,13 @@ public class Scheduler {
     private String contents;
 
     public Scheduler(SchedulerRequestDto requestDto) {
+        this.username = requestDto.getUsername();
+        this.contents = requestDto.getContents();
     }
 
     public void update(SchedulerRequestDto requestDto) {
+        this.username = requestDto.getUsername();
+        this.contents = requestDto.getContents();
     }
 }
 
