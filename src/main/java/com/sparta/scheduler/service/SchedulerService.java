@@ -12,10 +12,10 @@ import java.util.List;
 @Service
 public class SchedulerService {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final SchedulerRepository schedulerRepository;
 
     public SchedulerService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+        this.schedulerRepository = new SchedulerRepository(jdbcTemplate);
     }
 
     //create
@@ -24,7 +24,6 @@ public class SchedulerService {
         Scheduler scheduler = new Scheduler(requestDto);
 
         //DB 저장
-        SchedulerRepository schedulerRepository = new SchedulerRepository(jdbcTemplate);
         Scheduler saveScheduler = schedulerRepository.save(scheduler);
 
         // Entity -> ResponseDto
@@ -36,13 +35,11 @@ public class SchedulerService {
     //read
     public List<SchedulerResponseDto> readScheduler() {
         //DB조회
-        SchedulerRepository schedulerRepository = new SchedulerRepository(jdbcTemplate);
         return schedulerRepository.findAll();
     }
 
     //uddate
     public Long updateScheduler(Long id, SchedulerRequestDto requestDto) {
-        SchedulerRepository schedulerRepository = new SchedulerRepository(jdbcTemplate);
         //해당 스케줄이 DB에 있는지 확인
         Scheduler scheduler = schedulerRepository.findById(id);
         if (scheduler != null) {
@@ -56,7 +53,6 @@ public class SchedulerService {
 
     //delete
     public Long deleteScheduler(Long id) {
-        SchedulerRepository schedulerRepository = new SchedulerRepository(jdbcTemplate);
         //해당 스케줄이 DB에 있는지 확인
         Scheduler scheduler = schedulerRepository.findById(id);
         if (scheduler != null) {
