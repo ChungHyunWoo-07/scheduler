@@ -1,18 +1,18 @@
-package com.sparta.scheduler.entity;
+package com.sparta.scheduler.scheduler.entity;
 
-import com.sparta.scheduler.dto.SchedulerRequestDto;
+import com.sparta.scheduler.scheduler.dto.SchedulerRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Scheduler")
+@Table(name = "scheduler")
 @Getter
 @NoArgsConstructor
 @Setter
 
-public class Scheduler {
+public class Scheduler extends Timestamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

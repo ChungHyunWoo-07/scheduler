@@ -1,8 +1,8 @@
-package com.sparta.scheduler.controller;
+package com.sparta.scheduler.scheduler.controller;
 
-import com.sparta.scheduler.dto.SchedulerRequestDto;
-import com.sparta.scheduler.dto.SchedulerResponseDto;
-import com.sparta.scheduler.service.SchedulerService;
+import com.sparta.scheduler.scheduler.dto.SchedulerRequestDto;
+import com.sparta.scheduler.scheduler.dto.SchedulerResponseDto;
+import com.sparta.scheduler.scheduler.service.SchedulerService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +34,7 @@ public class SchedulerController {
     public Long updateScheduler(@PathVariable Long id, @RequestBody SchedulerRequestDto requestDto) {
         return schedulerService.updateScheduler(id, requestDto);
     }
+
     //delete
     @DeleteMapping("/{id}")
     public Long deleteScheduler(@PathVariable Long id) {

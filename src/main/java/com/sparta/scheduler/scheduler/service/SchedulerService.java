@@ -1,9 +1,9 @@
-package com.sparta.scheduler.service;
+package com.sparta.scheduler.scheduler.service;
 
-import com.sparta.scheduler.dto.SchedulerRequestDto;
-import com.sparta.scheduler.dto.SchedulerResponseDto;
-import com.sparta.scheduler.entity.Scheduler;
-import com.sparta.scheduler.repository.SchedulerRepository;
+import com.sparta.scheduler.scheduler.dto.SchedulerRequestDto;
+import com.sparta.scheduler.scheduler.dto.SchedulerResponseDto;
+import com.sparta.scheduler.scheduler.entity.Scheduler;
+import com.sparta.scheduler.scheduler.repository.SchedulerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +35,7 @@ public class SchedulerService {
     //read
     public List<SchedulerResponseDto> readScheduler() {
         //DB조회
-        return schedulerRepository.findAll().stream().map(SchedulerResponseDto::new).toList();
+        return schedulerRepository.findAllByOrderByModifiedAtDesc().stream().map(SchedulerResponseDto::new).toList();
     }
 
     //uddate
@@ -61,6 +61,8 @@ public class SchedulerService {
     }
 
     private Scheduler findScheduler(Long id) {
+//        Optional<Scheduler> result = schedulerRepository.findById(id);
+//        result.orElseThrow();
         return schedulerRepository.findById(id).orElseThrow(()-> // orElseThrow 어떻게 작동하는 건지?
                 new IllegalArgumentException("선택한 메모는 존재하지 않습니다.")
         );

@@ -1,25 +1,13 @@
-package com.sparta.scheduler.repository;
+package com.sparta.scheduler.scheduler.repository;
 
-import com.sparta.scheduler.dto.SchedulerRequestDto;
-import com.sparta.scheduler.dto.SchedulerResponseDto;
-import com.sparta.scheduler.entity.Scheduler;
-import jakarta.persistence.EntityManager;
+import com.sparta.scheduler.scheduler.entity.Scheduler;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 //@Repository  //JpaRepository를 넣음으로 @Repository를 빼도 작동함
 public interface SchedulerRepository extends JpaRepository<Scheduler, Long> {
+    List<Scheduler> findAllByOrderByModifiedAtDesc(); //수정 시간을 기준으로 내림차순으로 정렬
 
 }
 
